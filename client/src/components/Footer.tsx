@@ -12,8 +12,12 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {/* Brand Section */}
           <div>
-            <div className="text-2xl font-bold mb-4">
-              VJ<span className="text-primary">Rack</span>
+            <div className="mb-4">
+              <img
+                src="/vjrack-logo.png"
+                alt="VJ Rack - The Complete Shop Needs"
+                className="h-10 w-auto object-contain"
+              />
             </div>
             <p className="text-gray-300 text-sm md:text-base mb-6">
               {companyInfo.tagline}

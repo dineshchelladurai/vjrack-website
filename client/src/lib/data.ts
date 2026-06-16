@@ -42,42 +42,42 @@ export const categories: Category[] = [
     id: 'super-market',
     name: 'Super Market Rack',
     description: 'High-capacity display racks for supermarket environments',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/supermarket-6-430x573.png',
+    image: '/images/categories/super-market.png',
     slug: 'super-market-rack'
   },
   {
     id: 'textile',
     name: 'Textile Garments Rack',
     description: 'Specialized racks for clothing and textile retail displays',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/textile-rack-1-430x573.png',
+    image: '/images/categories/textile.png',
     slug: 'textile-garments-rack'
   },
   {
     id: 'hyper-market',
     name: 'Hyper Market Rack',
     description: 'Heavy-duty racks designed for high-capacity retail environments',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/hypermarket-1-430x573.png',
+    image: '/images/categories/hyper-market.png',
     slug: 'hyper-market-rack'
   },
   {
     id: 'medical-shop',
     name: 'Medical Shop Rack',
     description: 'Specialized racks for pharmacy and medical retail',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/all-type-5-430x573.png',
+    image: '/images/categories/medical-shop.png',
     slug: 'medical-shop-rack'
   },
   {
     id: 'metal-mart',
     name: 'Metal Mart Rack',
     description: 'Durable metal shelving for industrial and retail storage',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/metalrack-1-430x573.png',
+    image: '/images/categories/metal-mart.png',
     slug: 'metal-mart-rack'
   },
   {
     id: 'heavy-duty',
     name: 'Heavy Duty Rack',
     description: 'Industrial-strength racks for maximum load capacity',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/metal-8-430x573.png',
+    image: '/images/categories/heavy-duty.png',
     slug: 'heavy-duty-rack'
   },
   // === REMAINING CATEGORIES ===
@@ -85,147 +85,147 @@ export const categories: Category[] = [
     id: 'all-type-commercial',
     name: 'All Type of Commercial Racks',
     description: 'Versatile commercial storage solutions for diverse retail and warehouse needs',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/all-typeracks-2-430x573.png',
+    image: '/images/categories/all-type-commercial.png',
     slug: 'all-type-of-commercial-racks'
   },
   {
     id: 'fruits-vegetables',
     name: 'Fruits and Vegetable Rack',
     description: 'Fresh produce display racks for grocery and farmers markets',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/vegetable-racks-2-430x573.png',
+    image: '/images/categories/fruits-vegetables.png',
     slug: 'fruits-and-vegetable-rack'
   },
   {
     id: 'innovative',
     name: 'Innovative Rack',
     description: 'Modern innovative storage solutions with unique designs',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/Innovative-racks-8-430x573.png',
+    image: '/images/categories/innovative.png',
     slug: 'innovative-rack'
   },
   {
     id: 'most-relevant',
     name: 'Most Relevant Racks',
     description: 'Our most popular and highly-rated storage solutions',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/Most-relevant-racks-9-430x573.png',
+    image: '/images/categories/most-relevant.png',
     slug: 'most-relevant-racks'
   },
   {
     id: 'super-market-accessories',
     name: 'Super Market Accessories',
     description: 'Complementary accessories for supermarket displays',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/hypermarket-430x573.png',
+    image: '/images/categories/super-market-accessories.png',
     slug: 'super-market-accessories'
   },
   {
     id: 'electronics-shop',
     name: 'Electronics Shop Rack',
     description: 'Display racks designed for electronics retail',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/4-430x573.png',
+    image: '/images/categories/electronics-shop.png',
     slug: 'electronics-shop-rack'
   },
   {
     id: 'fancy-store',
     name: 'Fancy Store Rack',
     description: 'Premium racks for upscale retail environments',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/Innovative-racks-9-430x573.png',
+    image: '/images/categories/fancy-store.png',
     slug: 'fancy-store-rack'
   },
   {
     id: 'glass-frame',
     name: 'Glass Frame Type Rack',
     description: 'Elegant glass-framed racks for premium displays',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/9-430x573.png',
+    image: '/images/categories/glass-frame.png',
     slug: 'glass-frame-type-rack'
   },
   {
     id: 'slotted-angle',
     name: 'Slotted Angle Rack',
     description: 'Flexible slotted angle racks for customizable storage',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/metal-5-430x573.png',
+    image: '/images/categories/slotted-angle.png',
     slug: 'slotted-angle-rack'
   },
   {
     id: 'top-hanger',
     name: 'Top Hanger Rack',
     description: 'Premium hanging racks for apparel and textiles',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/10-430x573.png',
+    image: '/images/categories/top-hanger.png',
     slug: 'top-hanger-rack'
   },
   {
     id: 'masala-bin',
     name: 'Masala Bin Rack',
     description: 'Specialized racks for spice and masala storage',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/masala-rack-430x573.png',
+    image: '/images/categories/masala-bin.png',
     slug: 'masala-bin-rack'
   },
   {
     id: 'book-rack',
     name: 'Book Rack',
     description: 'Specialized racks for library and bookstore storage',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/stationary-6-430x573.png',
+    image: '/images/categories/book-rack.png',
     slug: 'book-rack'
   },
   {
     id: 'shoe-rack',
     name: 'Shoe Rack',
     description: 'Specialized racks for footwear retail and organization',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/shoerack-3-430x573.png',
+    image: '/images/categories/shoe-rack.png',
     slug: 'shoe-rack'
   },
   {
     id: 'hook-rack',
     name: 'Hook Rack',
     description: 'Specialized racks with hooks for hanging items',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/2-430x573.png',
+    image: '/images/categories/hook-rack.png',
     slug: 'hook-rack'
   },
   {
     id: 'snacks-rack',
     name: 'Snacks Rack',
     description: 'Display racks optimized for snack and confectionery products',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/3-430x573.png',
+    image: '/images/categories/snacks-rack.png',
     slug: 'snacks-rack'
   },
   {
     id: 'corner-rack',
     name: 'Corner Rack',
     description: 'Efficient corner storage solutions for compact spaces',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/1-1536x2048.png',
+    image: '/images/categories/corner-rack.png',
     slug: 'corner-rack'
   },
   {
     id: 'sports-rack',
     name: 'Sports Rack',
     description: 'Specialized racks for sports equipment and apparel',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/all-type-6-430x573.png',
+    image: '/images/categories/sports-rack.png',
     slug: 'sports-rack'
   },
   {
     id: 'stall-bin',
     name: 'Stall Bin',
     description: 'Compact stall bins for retail and market displays',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/6-430x573.png',
+    image: '/images/categories/stall-bin.png',
     slug: 'stall-bin'
   },
   {
     id: 'stationary',
     name: 'Stationary Racks',
     description: 'Organized storage for office supplies and stationery items',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/stationary-5-430x573.png',
+    image: '/images/categories/stationary.png',
     slug: 'stationary-racks'
   },
   {
     id: 'tv-ac-display',
     name: 'TV and AC Display Rack',
     description: 'Specialized display racks for electronics and appliances',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/4-430x573.png',
+    image: '/images/categories/electronics-shop.png',
     slug: 'tv-and-ac-display-rack'
   },
   {
     id: 'wall-glass-frame',
     name: 'Wall Glass Frame Type Rack',
     description: 'Wall-mounted glass frame racks for premium displays',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/7-430x573.png',
+    image: '/images/categories/wall-glass-frame.png',
     slug: 'wall-glass-frame-type-rack'
   }
 ];
@@ -236,7 +236,7 @@ export const featuredProducts: Product[] = [
     id: 'product-1',
     name: 'Premium Hyper Market Rack',
     category: 'hyper-market',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/hypermarket-1-430x573.png',
+    image: '/images/products/product-1.png',
     description: 'Heavy-duty commercial rack system for large-scale retail operations',
     features: ['Load capacity: 500kg per shelf', 'Adjustable shelving', 'Powder-coated finish', 'Easy assembly']
   },
@@ -244,7 +244,7 @@ export const featuredProducts: Product[] = [
     id: 'product-2',
     name: 'Industrial Metal Mart Rack',
     category: 'metal-mart',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/metalrack-1-430x573.png',
+    image: '/images/products/product-2.png',
     description: 'Robust metal storage solution for industrial warehouses',
     features: ['Heavy-duty construction', 'Modular design', 'Corrosion-resistant', 'Customizable dimensions']
   },
@@ -252,7 +252,7 @@ export const featuredProducts: Product[] = [
     id: 'product-3',
     name: 'Textile Display Rack',
     category: 'textile',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/textile-rack-1-430x573.png',
+    image: '/images/products/product-3.png',
     description: 'Elegant rack system for clothing and textile retail',
     features: ['Hanging rod system', 'Adjustable height', 'Modern design', 'Space-efficient']
   },
@@ -260,7 +260,7 @@ export const featuredProducts: Product[] = [
     id: 'product-4',
     name: 'Commercial Storage Rack',
     category: 'all-type-commercial',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/all-type-7-430x573.png',
+    image: '/images/products/product-4.png',
     description: 'Versatile commercial storage for various retail applications',
     features: ['Multi-tier shelving', 'Durable steel frame', 'Easy maintenance', 'Professional finish']
   },
@@ -268,7 +268,7 @@ export const featuredProducts: Product[] = [
     id: 'product-5',
     name: 'Super Market Display Rack',
     category: 'super-market',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/supermarket-1-430x573.png',
+    image: '/images/products/product-5.png',
     description: 'Eye-catching display rack for supermarket product presentation',
     features: ['High visibility design', 'Adjustable shelves', 'Easy product access', 'Attractive finish']
   },
@@ -276,7 +276,7 @@ export const featuredProducts: Product[] = [
     id: 'product-6',
     name: 'Stationary Storage Rack',
     category: 'stationary',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/stationary-3-430x573.png',
+    image: '/images/products/product-6.png',
     description: 'Organized storage solution for office and stationery supplies',
     features: ['Compact design', 'Multiple compartments', 'Easy organization', 'Professional look']
   }
@@ -374,31 +374,31 @@ export const heroSlides = [
   }
 ];
 
-// Videos
+// Videos — downloaded locally from vjrack.com before domain shutdown
 export const videos = [
   {
     id: 'video-1',
     title: 'Textile Racks',
-    thumbnail: 'https://vjrack.com/wp-content/uploads/2025/02/1.mp4',
-    url: 'https://vjrack.com/wp-content/uploads/2025/02/1.mp4'
+    thumbnail: '/videos/video-1.mp4',
+    url: '/videos/video-1.mp4'
   },
   {
     id: 'video-2',
-    title: '4 October 2024',
-    thumbnail: 'https://vjrack.com/wp-content/uploads/2025/02/2.mp4',
-    url: 'https://vjrack.com/wp-content/uploads/2025/02/2.mp4'
+    title: 'Supermarket Rack Setup',
+    thumbnail: '/videos/video-2.mp4',
+    url: '/videos/video-2.mp4'
   },
   {
     id: 'video-3',
-    title: '4 October 2024',
-    thumbnail: 'https://vjrack.com/wp-content/uploads/2025/02/3.mp4',
-    url: 'https://vjrack.com/wp-content/uploads/2025/02/3.mp4'
+    title: 'Commercial Rack Display',
+    thumbnail: '/videos/video-3.mp4',
+    url: '/videos/video-3.mp4'
   },
   {
     id: 'video-4',
     title: 'VJ Rack Installation',
-    thumbnail: 'https://vjrack.com/wp-content/uploads/2025/02/4.mp4',
-    url: 'https://vjrack.com/wp-content/uploads/2025/02/4.mp4'
+    thumbnail: '/videos/video-4.mp4',
+    url: '/videos/video-4.mp4'
   }
 ];
 
@@ -410,7 +410,7 @@ export const companyInfo = {
   owner: 'Mr. Charles',
   ownerTitle: 'Founder & Owner of VJ Rack',
   mission: 'We pride ourselves on our unwavering commitment to durability, aesthetics, and functionality. Every product we offer is engineered with precision, strength, and long-term performance in mind. We believe in building long-term partnerships to help businesses grow smarter and more efficiently.',
-  ownerVideo: 'https://vjrack.com/wp-content/uploads/2025/07/WhatsApp-Video-2025-07-05-at-14.57.25_cc0de35b.mp4',
+  ownerVideo: '/videos/owner-video.mp4',
   address: 'NO 4/3, Chaina Complex, Madurai Veeram Nagar - Near MIET Gundur, Ayyarpattti, Trichy - 620017',
   phone: '+91 97878 71052',
   email: 'sales@vjrack.com'
@@ -447,7 +447,7 @@ export const blogPosts: BlogPost[] = [
       'Contact us today to discuss your supermarket rack requirements and get a custom quote tailored to your store\'s unique needs.'
     ],
     category: 'Buying Guide',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/supermarket-6-430x573.png',
+    image: '/images/blog/blog-1.png',
     author: 'VJ Rack Team',
     date: '2025-05-15',
     readTime: '5 min read',
@@ -468,7 +468,7 @@ export const blogPosts: BlogPost[] = [
       'Whether you\'re setting up a new warehouse or upgrading an existing one, VJ Rack offers customized heavy-duty racking solutions designed to meet your specific requirements. Our team provides end-to-end service — from initial consultation and design to installation and after-sales support.'
     ],
     category: 'Industry Insights',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/metal-8-430x573.png',
+    image: '/images/blog/blog-2.png',
     author: 'VJ Rack Team',
     date: '2025-05-10',
     readTime: '6 min read',
@@ -489,7 +489,7 @@ export const blogPosts: BlogPost[] = [
       'VJ Rack manufactures a complete range of textile display racks including top hanger racks, wall-mounted systems, and custom boutique fixtures. All our racks feature chrome or powder-coated finishes that complement any showroom aesthetic. Contact us for a free showroom layout consultation.'
     ],
     category: 'Tips & Tricks',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/textile-rack-1-430x573.png',
+    image: '/images/blog/blog-3.png',
     author: 'VJ Rack Team',
     date: '2025-05-05',
     readTime: '5 min read',
@@ -511,7 +511,7 @@ export const blogPosts: BlogPost[] = [
       'At VJ Rack, we manufacture both types and can help you choose the right system based on your specific requirements. Our team can even design hybrid solutions that combine both rack types for maximum efficiency.'
     ],
     category: 'Product Comparison',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/metal-5-430x573.png',
+    image: '/images/blog/blog-4.png',
     author: 'VJ Rack Team',
     date: '2025-04-28',
     readTime: '7 min read',
@@ -532,7 +532,7 @@ export const blogPosts: BlogPost[] = [
       'Ready to explore custom storage solutions for your business? Contact VJ Rack for a free on-site assessment and quote. Our team serves businesses across Trichy, Tamil Nadu, and throughout South India.'
     ],
     category: 'Business Tips',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/Most-relevant-racks-9-430x573.png',
+    image: '/images/blog/blog-5.png',
     author: 'VJ Rack Team',
     date: '2025-04-20',
     readTime: '5 min read',
@@ -554,7 +554,7 @@ export const blogPosts: BlogPost[] = [
       'VJ Rack offers a complete range of vegetable and fruit display racks suitable for supermarkets, grocery stores, and farmers markets. All our produce racks are built to food-industry standards and come with a quality guarantee. Get in touch for a free quote!'
     ],
     category: 'Product Guide',
-    image: 'https://vjrack.com/wp-content/uploads/2025/02/vegetable-racks-2-430x573.png',
+    image: '/images/blog/blog-6.png',
     author: 'VJ Rack Team',
     date: '2025-04-12',
     readTime: '6 min read',

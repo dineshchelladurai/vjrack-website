@@ -9,9 +9,7 @@ import { useLocation } from 'wouter';
 import PageTransition from '@/components/PageTransition';
 import PageHero from '@/components/PageHero';
 
-// Web3Forms access key — get yours free at https://web3forms.com
-// Replace this with your actual access key from Web3Forms
-const WEB3FORMS_ACCESS_KEY = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || '';
+// Using internal API to save to CRM and send emails using nodemailer
 
 export default function Contact() {
   const [location] = useLocation();
@@ -96,25 +94,17 @@ export default function Contact() {
     setIsSubmitting(true);
     setLastSubmitTime(now);
 
-    if (!WEB3FORMS_ACCESS_KEY) {
-      toast.error('Contact form is not configured yet. Please call us directly at ' + companyInfo.phone);
-      setIsSubmitting(false);
-      return;
-    }
-
     try {
-      const response = await fetch('https://api.web3forms.com/submit', {
+      const response = await fetch('/api/enquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: `New Enquiry from ${formData.name.substring(0, 100)} — VJ Rack Website`,
-          from_name: 'VJ Rack Website',
-          name: formData.name.substring(0, 100),
-          email: formData.email.substring(0, 254),
-          phone: formData.phone.substring(0, 20),
-          category: (formData.category || 'Not specified').substring(0, 100),
-          message: formData.message.substring(0, 2000),
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          productInterest: formData.category,
+          message: formData.message,
+          source: 'contact_page'
         }),
       });
 
@@ -127,7 +117,7 @@ export default function Contact() {
         // Reset success state after 5 seconds
         setTimeout(() => setIsSuccess(false), 5000);
       } else {
-        toast.error('Failed to send message. Please try again or call us directly.');
+        toast.error(result.error || 'Failed to send message. Please try again or call us directly.');
       }
     } catch (error) {
       toast.error('Network error. Please check your connection or call us directly.');

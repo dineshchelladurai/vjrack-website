@@ -1,8 +1,8 @@
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { galleryImages, galleryCategories } from '@/lib/galleryData';
+import { galleryCategories } from '@/lib/galleryData';
 import { useState, useEffect } from 'react';
-import { X, ChevronLeft, ChevronRight, ZoomIn, Plus, Lock, LogOut, Trash2 } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useLocation } from 'wouter';
 import PageTransition from '@/components/PageTransition';
@@ -10,226 +10,51 @@ import AnimateOnScroll from '@/components/AnimateOnScroll';
 import PremiumQuote from '@/components/PremiumQuote';
 import PageHero from '@/components/PageHero';
 
-const ADMIN_TOKEN_KEY = 'vjrack-admin-token';
-const GALLERY_STORAGE_KEY = 'vjrack-custom-gallery';
-const HIDDEN_GALLERY_KEY = 'vjrack-hidden-gallery';
-
-function loadCustomImages() {
-  try {
-    const stored = localStorage.getItem(GALLERY_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch { return []; }
-}
-
-function saveCustomImages(images: any[]) {
-  localStorage.setItem(GALLERY_STORAGE_KEY, JSON.stringify(images));
-}
-
-function loadHiddenImageIds() {
-  try {
-    const stored = localStorage.getItem(HIDDEN_GALLERY_KEY);
-    return stored ? JSON.parse(stored) : [];
-  } catch { return []; }
-}
-
-function saveHiddenImageIds(ids: string[]) {
-  localStorage.setItem(HIDDEN_GALLERY_KEY, JSON.stringify(ids));
-}
-
 export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [, navigate] = useLocation();
 
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [showLoginModal, setShowLoginModal] = useState(false);
-  const [adminPassword, setAdminPassword] = useState('');
-  const [loginError, setLoginError] = useState('');
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [allImages, setAllImages] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // 2FA State
-  const [show2FA, setShow2FA] = useState(false);
-  const [setup2FAUrl, setSetup2FAUrl] = useState('');
-  const [tempSecret, setTempSecret] = useState('');
-  const [totpCode, setTotpCode] = useState('');
-
-  const [showAddForm, setShowAddForm] = useState(false);
-  const [formImage, setFormImage] = useState<File | null>(null);
-  const [formCategory, setFormCategory] = useState(galleryCategories[1] || 'Commercial Racks');
-  const [formAlt, setFormAlt] = useState('');
-  const [isUploading, setIsUploading] = useState(false);
-
-  const [customImages, setCustomImages] = useState<any[]>(loadCustomImages);
-  const [hiddenIds, setHiddenIds] = useState<string[]>(loadHiddenImageIds);
-
+  // Load gallery images from server on mount
   useEffect(() => {
-    const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
-    if (token) {
-      fetch('/api/admin/verify', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
-      })
-        .then(res => res.json())
-        .then(data => { if (data.valid) setIsAdmin(true); else sessionStorage.removeItem(ADMIN_TOKEN_KEY); })
-        .catch(() => {});
-    }
+    fetch('/api/gallery/custom')
+      .then(res => res.json())
+      .then(data => { if (data.success) setAllImages(data.customImages); })
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
   }, []);
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('admin') === 'true' && !isAdmin) {
-      setShowLoginModal(true);
-    }
-  }, [isAdmin]);
-
-  const handleAdminLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isLoggingIn) return;
-    setIsLoggingIn(true);
-    setLoginError('');
-
-    try {
-      const payload: any = { password: adminPassword };
-      if (show2FA) payload.code = totpCode;
-      if (tempSecret) payload.tempSecret = tempSecret;
-
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json();
-
-      if (data.success) {
-        if (data.requiresSetup) {
-          setSetup2FAUrl(data.qrCodeUrl);
-          setTempSecret(data.tempSecret);
-          setShow2FA(true);
-        } else if (data.requires2FA) {
-          setShow2FA(true);
-        } else if (data.token) {
-          sessionStorage.setItem(ADMIN_TOKEN_KEY, data.token);
-          setIsAdmin(true);
-          setShowLoginModal(false);
-          setAdminPassword('');
-          setTotpCode('');
-          setTempSecret('');
-          setShow2FA(false);
-          setLoginError('');
-        }
-      } else {
-        setLoginError(data.error || 'Login failed');
-      }
-    } catch {
-      setLoginError('Network error. Please try again.');
-    } finally {
-      setIsLoggingIn(false);
-    }
-  };
-
-  const handleAdminLogout = () => {
-    const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
-    if (token) {
-      fetch('/api/admin/logout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
-      }).catch(() => {});
-    }
-    setIsAdmin(false);
-    sessionStorage.removeItem(ADMIN_TOKEN_KEY);
-  };
-
-  const handleAddSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!formImage) return;
-
-    setIsUploading(true);
-    try {
-      const token = sessionStorage.getItem(ADMIN_TOKEN_KEY);
-      const formData = new FormData();
-      formData.append("image", formImage);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        headers: { "Authorization": `Bearer ${token}` },
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (!data.success) throw new Error(data.error);
-
-      const newImage = {
-        id: `custom-${Date.now()}`,
-        src: data.url,
-        category: formCategory,
-        alt: formAlt.trim() || 'VJ Rack Product',
-      };
-
-      const updated = [newImage, ...customImages];
-      setCustomImages(updated);
-      saveCustomImages(updated);
-      
-      setFormImage(null);
-      setFormAlt('');
-      setShowAddForm(false);
-    } catch (e) {
-      alert("Failed to upload image. Make sure you are logged in.");
-    } finally {
-      setIsUploading(false);
-    }
-  };
-
-  const handleDeleteImage = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (id.startsWith('custom-')) {
-      const updated = customImages.filter((img: any) => img.id !== id);
-      setCustomImages(updated);
-      saveCustomImages(updated);
-    } else {
-      const updated = [...hiddenIds, id];
-      setHiddenIds(updated);
-      saveHiddenImageIds(updated);
-    }
-  };
-
-  const allImages = [...customImages, ...galleryImages].filter(img => !hiddenIds.includes(img.id));
-
-  const filteredImages = selectedCategory === 'All'
-    ? allImages
+  const filteredImages = selectedCategory === 'All' 
+    ? allImages 
     : allImages.filter(img => img.category === selectedCategory);
 
   const openLightbox = (index: number) => setLightboxIndex(index);
   const closeLightbox = () => setLightboxIndex(null);
-
-  const nextImage = () => {
-    if (lightboxIndex !== null) {
-      setLightboxIndex((lightboxIndex + 1) % filteredImages.length);
-    }
+  const nextImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLightboxIndex(prev => prev === null ? null : (prev + 1) % filteredImages.length);
+  };
+  const prevImage = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setLightboxIndex(prev => prev === null ? null : (prev - 1 + filteredImages.length) % filteredImages.length);
   };
 
-  const prevImage = () => {
-    if (lightboxIndex !== null) {
-      setLightboxIndex((lightboxIndex - 1 + filteredImages.length) % filteredImages.length);
-    }
-  };
-
-  // Keyboard navigation for lightbox
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (lightboxIndex === null) return;
       if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowRight') setLightboxIndex(prev => prev !== null ? (prev + 1) % filteredImages.length : null);
-      if (e.key === 'ArrowLeft') setLightboxIndex(prev => prev !== null ? (prev - 1 + filteredImages.length) % filteredImages.length : null);
+      if (e.key === 'ArrowRight') setLightboxIndex(prev => prev === null ? null : (prev + 1) % filteredImages.length);
+      if (e.key === 'ArrowLeft') setLightboxIndex(prev => prev === null ? null : (prev - 1 + filteredImages.length) % filteredImages.length);
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [lightboxIndex, filteredImages.length]);
 
-  // Prevent body scroll when lightbox is open
   useEffect(() => {
-    document.body.style.overflow = lightboxIndex !== null ? 'hidden' : '';
+    if (lightboxIndex !== null) document.body.style.overflow = 'hidden';
     return () => { document.body.style.overflow = ''; };
   }, [lightboxIndex]);
 
@@ -243,29 +68,10 @@ export default function Gallery() {
       <div className="min-h-screen bg-white">
         <Header />
 
-        {/* Hero */}
         <PageHero 
           title="Our Gallery" 
           subtitle={`Browse ${allImages.length}+ real photos of our rack installations, products, and happy customers`} 
-        >
-          {isAdmin && (
-            <div className="flex items-center justify-center gap-3 w-full mt-6">
-              <Button
-                onClick={() => setShowAddForm(true)}
-                className="bg-primary hover:bg-primary/90 text-white font-semibold px-6 py-3 flex items-center gap-2 shadow-lg"
-              >
-                <Plus className="w-5 h-5" />
-                Add Image
-              </Button>
-              <button
-                onClick={handleAdminLogout}
-                className="p-2 text-white/60 hover:text-white transition-colors" title="Logout Admin"
-              >
-                <LogOut className="w-5 h-5" />
-              </button>
-            </div>
-          )}
-        </PageHero>
+        />
 
         {/* Category Filter */}
         <section className="py-6 bg-secondary border-b border-border sticky top-16 md:top-[68px] z-30">
@@ -324,12 +130,11 @@ export default function Gallery() {
                       className="group relative cursor-pointer rounded-lg overflow-hidden bg-secondary aspect-[3/4]"
                     >
                       <img
-                        src={image.src}
+                        src={image.thumbnailSrc || image.src}
                         alt={image.alt}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         loading="lazy"
                       />
-                      {/* Hover Overlay */}
                       <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
                         <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center gap-2">
                           <ZoomIn className="w-8 h-8 text-white" />
@@ -339,15 +144,6 @@ export default function Gallery() {
                         </div>
                       </div>
                     </div>
-                    {isAdmin && (
-                      <button
-                        onClick={(e) => handleDeleteImage(image.id, e)}
-                        className="absolute top-2 right-2 p-2 bg-red-500 hover:bg-red-600 text-white rounded-md z-10 opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
-                        title="Delete Image"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    )}
                   </div>
                 </AnimateOnScroll>
               ))}
@@ -378,166 +174,30 @@ export default function Gallery() {
         {/* Lightbox */}
         {lightboxIndex !== null && filteredImages[lightboxIndex] && (
           <div className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center" onClick={closeLightbox}>
-            {/* Close */}
             <button onClick={closeLightbox} className="absolute top-4 right-4 z-50 p-2 text-white/70 hover:text-white transition-colors">
               <X className="w-8 h-8" />
             </button>
-
-            {/* Counter */}
-            <div className="absolute top-4 left-4 z-50 text-white/70 text-sm font-medium">
-              {lightboxIndex + 1} / {filteredImages.length}
-            </div>
-
-            {/* Category label */}
-            <div className="absolute top-4 left-1/2 -translate-x-1/2 z-50">
-              <span className="bg-primary/80 text-white text-xs px-3 py-1 rounded-full backdrop-blur-sm">
-                {filteredImages[lightboxIndex].category}
-              </span>
-            </div>
-
-            {/* Prev */}
-            <button
-              onClick={(e) => { e.stopPropagation(); prevImage(); }}
-              className="absolute left-2 md:left-6 top-1/2 -translate-y-1/2 z-50 p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-all"
-            >
+            <button onClick={prevImage} className="absolute left-2 md:left-8 z-50 p-3 bg-black/50 text-white rounded-full hover:bg-black/80 transition-colors backdrop-blur-sm">
               <ChevronLeft className="w-6 h-6 md:w-8 md:h-8" />
             </button>
-
-            {/* Image */}
-            <div className="max-w-5xl max-h-[85vh] px-16" onClick={(e) => e.stopPropagation()}>
+            <button onClick={nextImage} className="absolute right-2 md:right-8 z-50 p-3 bg-black/50 text-white rounded-full hover:bg-black/80 transition-colors backdrop-blur-sm">
+              <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
+            <div className="relative max-w-5xl w-full max-h-[90vh] px-12 md:px-24 flex items-center justify-center" onClick={e => e.stopPropagation()}>
               <img
                 src={filteredImages[lightboxIndex].src}
                 alt={filteredImages[lightboxIndex].alt}
-                className="max-w-full max-h-[85vh] object-contain mx-auto rounded-lg"
+                className="max-w-full max-h-[85vh] object-contain select-none"
+                draggable={false}
               />
-            </div>
-
-            {/* Next */}
-            <button
-              onClick={(e) => { e.stopPropagation(); nextImage(); }}
-              className="absolute right-2 md:right-6 top-1/2 -translate-y-1/2 z-50 p-3 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-all"
-            >
-              <ChevronRight className="w-6 h-6 md:w-8 md:h-8" />
-            </button>
-
-            {/* Alt text */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-50 text-white/80 text-sm text-center">
-              {filteredImages[lightboxIndex].alt}
+              <div className="absolute bottom-[-2rem] left-0 right-0 text-center text-white/70 text-sm">
+                {lightboxIndex + 1} / {filteredImages.length} &bull; {filteredImages[lightboxIndex].category}
+              </div>
             </div>
           </div>
         )}
 
         <Footer />
-
-        {/* Add Image Modal */}
-        {showAddForm && (
-          <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4" onClick={() => setShowAddForm(false)}>
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-fade-in-up" onClick={(e) => e.stopPropagation()}>
-              <div className="flex items-center justify-between p-6 border-b border-border">
-                <h2 className="text-xl font-bold text-foreground">Add New Image</h2>
-                <button onClick={() => setShowAddForm(false)} className="p-2 hover:bg-secondary rounded-lg transition-colors">
-                  <X className="w-5 h-5 text-muted-foreground" />
-                </button>
-              </div>
-              <form onSubmit={handleAddSubmit} className="p-6 space-y-5">
-                <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">Category</label>
-                  <select
-                    value={formCategory}
-                    onChange={(e) => setFormCategory(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary bg-white"
-                  >
-                    {galleryCategories.filter(c => c !== 'All').map(cat => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">Image File *</label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setFormImage(e.target.files?.[0] || null)}
-                    className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-semibold text-foreground mb-2">Alt Text / Description</label>
-                  <input
-                    type="text"
-                    value={formAlt}
-                    onChange={(e) => setFormAlt(e.target.value)}
-                    placeholder="Brief description of the image"
-                    className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-                <div className="flex gap-3 pt-4 border-t border-border">
-                  <Button type="submit" disabled={isUploading || !formImage} className="flex-1 bg-primary hover:bg-primary/90 text-white font-semibold py-3">
-                    <Plus className="w-4 h-4 mr-2" />
-                    {isUploading ? 'Uploading...' : 'Add Image'}
-                  </Button>
-                  <Button type="button" variant="outline" disabled={isUploading} onClick={() => setShowAddForm(false)} className="px-6 py-3">
-                    Cancel
-                  </Button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
-        {/* Admin Login Modal */}
-        {showLoginModal && (
-          <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4" onClick={() => { setShowLoginModal(false); setShow2FA(false); setTempSecret(''); }}>
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm animate-fade-in-up" onClick={(e) => e.stopPropagation()}>
-              <div className="p-8 text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Lock className="w-8 h-8 text-primary" />
-                </div>
-                <h2 className="text-xl font-bold text-foreground mb-2">Admin Access</h2>
-                <p className="text-sm text-muted-foreground mb-6">
-                  {show2FA ? (setup2FAUrl ? 'Scan the QR code with your Authenticator app and enter the code below' : 'Enter the 6-digit code from your Authenticator app') : 'Enter the admin password to manage gallery'}
-                </p>
-
-                <form onSubmit={handleAdminLogin} className="space-y-4">
-                  {!show2FA && (
-                    <input
-                      type="password"
-                      value={adminPassword}
-                      onChange={(e) => { setAdminPassword(e.target.value); setLoginError(''); }}
-                      placeholder="Enter admin password"
-                      className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary text-center"
-                      autoFocus
-                    />
-                  )}
-
-                  {show2FA && (
-                    <div className="space-y-4">
-                      {setup2FAUrl && (
-                        <div className="flex justify-center mb-4">
-                          <img src={setup2FAUrl} alt="2FA QR Code" className="w-48 h-48 border rounded-lg" />
-                        </div>
-                      )}
-                      <input
-                        type="text"
-                        value={totpCode}
-                        onChange={(e) => { setTotpCode(e.target.value.replace(/\D/g, '').substring(0, 6)); setLoginError(''); }}
-                        placeholder="000000"
-                        className="w-full px-4 py-3 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary text-center text-2xl tracking-widest font-mono"
-                        autoFocus
-                      />
-                    </div>
-                  )}
-
-                  {loginError && <p className="text-sm text-red-500">{loginError}</p>}
-                  <Button type="submit" disabled={isLoggingIn || (show2FA && totpCode.length < 6)} className="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3">
-                    {isLoggingIn ? 'Verifying...' : (show2FA ? 'Verify Code' : 'Unlock')}
-                  </Button>
-                </form>
-              </div>
-            </div>
-          </div>
-        )}
       </div>
     </PageTransition>
   );

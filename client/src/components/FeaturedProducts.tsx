@@ -3,9 +3,11 @@ import { Button } from '@/components/ui/button';
 import { ShoppingCart } from 'lucide-react';
 import { useLocation } from 'wouter';
 import AnimateOnScroll from '@/components/AnimateOnScroll';
+import { useCustomAssets } from '@/hooks/useCustomAssets';
 
 export default function FeaturedProducts() {
   const [, navigate] = useLocation();
+  const { customAssets } = useCustomAssets();
 
   return (
     <section className="py-16 md:py-24 bg-white">
@@ -34,11 +36,11 @@ export default function FeaturedProducts() {
                 className="group bg-white rounded-lg overflow-hidden border border-border hover:border-primary hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full"
               >
                 {/* Image Container */}
-                <div className="relative overflow-hidden bg-secondary h-64 md:h-72">
+                <div className="relative overflow-hidden bg-secondary h-64 md:h-72 flex items-center justify-center p-4">
                   <img
-                    src={product.image}
+                    src={customAssets[product.id] || product.image}
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    className="w-full h-full object-contain mix-blend-multiply group-hover:scale-105 transition-transform duration-500"
                     loading="lazy"
                   />
                   {/* Overlay */}

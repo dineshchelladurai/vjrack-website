@@ -103,19 +103,13 @@ export default function Header() {
             {/* ── Logo ──────────────────────────────────────────────── */}
             <button
               onClick={() => navigate('/')}
-              className="flex items-center gap-1 group relative"
+              className="flex items-center group relative"
             >
-              <div className="relative">
-                {/* Glow dot */}
-                <span className="absolute -top-0.5 -right-1 w-2 h-2 rounded-full bg-[#22d3ee] opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse" />
-                <span
-                  className="text-2xl lg:text-[28px] font-extrabold tracking-tight"
-                  style={{ fontFamily: "'Poppins', sans-serif" }}
-                >
-                  <span className="text-[#0891b2]">VJ</span>
-                  <span className="text-[#1a1a1a]">Rack</span>
-                </span>
-              </div>
+              <img
+                src="/vjrack-logo.png"
+                alt="VJ Rack - The Complete Shop Needs"
+                className="h-10 lg:h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              />
             </button>
 
             {/* ── Desktop Navigation ────────────────────────────────── */}
@@ -254,13 +248,11 @@ export default function Header() {
             >
               {/* Drawer Header */}
               <div className="flex items-center justify-between px-5 h-16 border-b border-gray-100">
-                <span
-                  className="text-xl font-extrabold"
-                  style={{ fontFamily: "'Poppins', sans-serif" }}
-                >
-                  <span className="text-[#0891b2]">VJ</span>
-                  <span className="text-[#1a1a1a]">Rack</span>
-                </span>
+                <img
+                  src="/vjrack-logo.png"
+                  alt="VJ Rack"
+                  className="h-8 w-auto object-contain"
+                />
                 <button
                   onClick={() => setIsMenuOpen(false)}
                   className="w-9 h-9 flex items-center justify-center rounded-xl hover:bg-gray-100 transition-colors"

@@ -2,9 +2,11 @@ import { categories } from '@/lib/data';
 import { ArrowRight } from 'lucide-react';
 import { useLocation } from 'wouter';
 import AnimateOnScroll from '@/components/AnimateOnScroll';
+import { useCustomAssets } from '@/hooks/useCustomAssets';
 
 export default function Categories() {
   const [, setLocation] = useLocation();
+  const { customAssets } = useCustomAssets();
   
   // Show only first 6 categories on home page
   const displayedCategories = categories.slice(0, 6);
@@ -36,7 +38,7 @@ export default function Categories() {
                 <div className="relative overflow-hidden rounded-lg bg-secondary h-64 md:h-72 mb-4 cursor-pointer">
                   {/* Image */}
                   <img
-                    src={category.image}
+                    src={customAssets[category.id] || category.image}
                     alt={category.name}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                     loading="lazy"

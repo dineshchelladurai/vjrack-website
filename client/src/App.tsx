@@ -14,6 +14,16 @@ const Blog = React.lazy(() => import('@/pages/Blog'));
 const BlogPostPage = React.lazy(() => import('@/pages/BlogPost'));
 const Gallery = React.lazy(() => import('@/pages/Gallery'));
 const EnquiryPopup = React.lazy(() => import('./components/EnquiryPopup'));
+
+// Admin Pages
+const AdminLogin = React.lazy(() => import('@/pages/admin/AdminLogin'));
+const AdminResetPassword = React.lazy(() => import('@/pages/admin/AdminResetPassword'));
+const AdminLayout = React.lazy(() => import('@/pages/admin/AdminLayout'));
+const AdminDashboard = React.lazy(() => import('@/pages/admin/AdminDashboard'));
+const AdminGallery = React.lazy(() => import('@/pages/admin/AdminGallery'));
+const AdminBlog = React.lazy(() => import('@/pages/admin/AdminBlog'));
+const AdminAssets = React.lazy(() => import('@/pages/admin/AdminAssets'));
+const AdminSettings = React.lazy(() => import('@/pages/admin/AdminSettings'));
 import ScrollToTop from "./components/ScrollToTop";
 import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
@@ -34,6 +44,36 @@ function Router() {
         <Route path={"/blog"} component={Blog} />
         <Route path={"/blog/:slug"} component={BlogPostPage} />
         <Route path={"/gallery"} component={Gallery} />
+        
+        {/* Admin Routes */}
+        <Route path="/admin/login" component={AdminLogin} />
+        <Route path="/admin/reset-password" component={AdminResetPassword} />
+        <Route path="/admin">
+          <AdminLayout>
+            <AdminDashboard />
+          </AdminLayout>
+        </Route>
+        <Route path="/admin/gallery">
+          <AdminLayout>
+            <AdminGallery />
+          </AdminLayout>
+        </Route>
+        <Route path="/admin/blog">
+          <AdminLayout>
+            <AdminBlog />
+          </AdminLayout>
+        </Route>
+        <Route path="/admin/assets">
+          <AdminLayout>
+            <AdminAssets />
+          </AdminLayout>
+        </Route>
+        <Route path="/admin/settings">
+          <AdminLayout>
+            <AdminSettings />
+          </AdminLayout>
+        </Route>
+
         <Route path={"/404"} component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />
