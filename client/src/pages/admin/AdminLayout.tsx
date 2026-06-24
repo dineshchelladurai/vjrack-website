@@ -32,7 +32,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <aside className="w-full md:w-64 bg-white border-r border-gray-200 flex-shrink-0 flex flex-col">
         <div className="p-4 border-b border-gray-200 flex items-center gap-3">
-          <img src="/vjrack-logo.png" alt="VJ Rack" className="h-8 w-auto object-contain" />
+          <img src="/vjrack-logo.png" alt="VJ Rack" className="h-10 w-auto object-contain" />
           <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Admin</span>
         </div>
         

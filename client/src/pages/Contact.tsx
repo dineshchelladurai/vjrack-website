@@ -25,6 +25,7 @@ export default function Contact() {
     message: ''
   });
 
+
   useEffect(() => {
     // Extract category from URL query parameter
     const params = new URLSearchParams(location.split('?')[1]);
@@ -328,6 +329,27 @@ export default function Contact() {
                   </Button>
                 </div>
               </form>
+            </div>
+          </div>
+
+          {/* Interactive Map Section */}
+          <div className="mt-16 bg-secondary p-4 rounded-xl shadow-inner border border-gray-100">
+            <h3 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
+              <MapPin className="w-5 h-5 text-primary" />
+              Find us on Google Maps
+            </h3>
+            <div className="rounded-lg overflow-hidden shadow-lg border border-gray-200 aspect-[16/9] md:aspect-[21/9] w-full bg-gray-200">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.467475355673!2d78.71887467590858!3d10.775466489373307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3baaf50821df26df%3A0xe54d920cd767a9cf!2sVJ%20Rack-supermarket%20rack%20manufacturer!5e0!3m2!1sen!2sin!4v1718160000000!5m2!1sen!2sin"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={true}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="VJ Rack Head Office Google Map"
+                className="w-full h-full min-h-[350px]"
+              />
             </div>
           </div>
         </div>

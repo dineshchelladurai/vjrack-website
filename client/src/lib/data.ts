@@ -349,14 +349,6 @@ export const testimonials: Testimonial[] = [
 // Hero slides
 export const heroSlides = [
   {
-    id: 'slide-1',
-    image: '/hero-slide-1.png',
-    title: 'Industrial Storage Solutions',
-    description: 'Heavy-duty warehouse racking systems built for maximum load capacity',
-    cta: 'Explore Products',
-    link: '/shop'
-  },
-  {
     id: 'slide-2',
     image: '/hero-slide-2.png',
     title: 'Retail Display Racks',
@@ -371,6 +363,22 @@ export const heroSlides = [
     description: 'Elegant display racks for clothing showrooms & boutiques',
     cta: 'Get Started',
     link: '/contact'
+  },
+  {
+    id: 'slide-4',
+    image: '/hero-slide-4.png',
+    title: 'Pharmacy & Healthcare Racks',
+    description: 'Precision-engineered shelving systems for pharmacies, hospitals, and labs',
+    cta: 'Request a Quote',
+    link: '/contact'
+  },
+  {
+    id: 'slide-1',
+    image: '/hero-slide-1.png',
+    title: 'Industrial Storage Solutions',
+    description: 'Heavy-duty warehouse racking systems built for maximum load capacity',
+    cta: 'Explore Products',
+    link: '/shop'
   }
 ];
 

@@ -83,7 +83,7 @@ export default function AdminLogin() {
       <div className="bg-white p-8 rounded-xl shadow-xl max-w-md w-full border border-gray-100">
         
         <div className="flex justify-center mb-6">
-          <img src="/vjrack-logo.png" alt="VJ Rack" className="h-12 w-auto object-contain" />
+          <img src="/vjrack-logo.png" alt="VJ Rack" className="h-16 w-auto object-contain" />
         </div>
 
         <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">

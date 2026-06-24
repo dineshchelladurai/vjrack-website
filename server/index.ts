@@ -194,6 +194,7 @@ async function startServer() {
         "img-src 'self' data:",
         "media-src 'self'",
         "connect-src 'self' https://api.web3forms.com",
+        "frame-src 'self' https://www.google.com", // Allow Google Maps iframe
         "frame-ancestors 'none'", // Prevents Clickjacking
         "base-uri 'self'",
         "form-action 'self' https://api.web3forms.com",

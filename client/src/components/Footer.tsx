@@ -16,7 +16,7 @@ export default function Footer() {
               <img
                 src="/vjrack-logo.png"
                 alt="VJ Rack - The Complete Shop Needs"
-                className="h-10 w-auto object-contain"
+                className="h-14 w-auto object-contain"
               />
             </div>
             <p className="text-gray-300 text-sm md:text-base mb-6">
